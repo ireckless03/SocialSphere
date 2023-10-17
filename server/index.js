@@ -8,6 +8,8 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { register } from 'module';
+import {register} from "./controllers/auth.js"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -36,8 +38,12 @@ const storage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
-
 const upload = multer({ storage });
+
+// Routes with files
+app.post('/auth/register', upload.single('picture'), register);
+
+
 
 // Define the MongoDB connection URL
 const mongoURL = process.env.MONGO_URL;
@@ -50,10 +56,11 @@ console.log(mongoURL);
 
 // Check if mongoURL is defined and attempt to connect
 if (mongoURL) {
-  mongoose.connect(mongoURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
+  mongoose
+    .connect(mongoURL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
     .then(() => {
       console.log(`Connected to MongoDB Port: ${port}`);
     })
@@ -61,5 +68,7 @@ if (mongoURL) {
       console.error('Error connecting to MongoDB:', error);
     });
 } else {
-  console.error('MONGO_URL is not defined. Make sure to set it in your .env file.');
+  console.error(
+    'MONGO_URL is not defined. Make sure to set it in your .env file.'
+  );
 }
