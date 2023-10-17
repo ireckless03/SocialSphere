@@ -1,0 +1,38 @@
+# Ignore system and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+
+# Ignore compiled files
+*.class
+*.jar
+*.war
+*.ear
+
+# Ignore build and temporary files
+/target/
+/build/
+/node_modules/
+/dist/
+/.cache/
+/.sass-cache/
+
+# Ignore log and backup files
+*.log
+*.bak
+
+# Ignore configuration files
+*.config
+
+# Ignore macOS specific files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Ignore Windows specific files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
