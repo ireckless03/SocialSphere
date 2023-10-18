@@ -1,4 +1,4 @@
-import { Jwt } from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 // Middleware function to verify JSON Web Token (JWT) for user authentication
 export const verifyToken = async (req, res, next) => {
