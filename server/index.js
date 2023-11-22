@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import cors from 'cors';
+import cors from 'cors'; // Import the cors package
 import dotenv from 'dotenv';
 import multer from 'multer';
 import helmet from 'helmet';
@@ -32,8 +32,12 @@ app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
 app.use(morgan('common'));
 app.use(bodyParser.json({ limit: '30mb', extended: true }));
-app.use(bodyParser.urlencoded({ limit: '30mb', extended: true })); // Fixed 'extended' value
-app.use(cors());
+app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
+app.use(cors({
+  origin: "http://localhost:3000", // Update with your React app's URL
+  credentials: true,
+}));
+
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
 // FILE STORAGE
@@ -54,6 +58,7 @@ app.post('/posts', verifyToken, upload.single('picture'), createPost);
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/posts', postRoutes);
+
 // Define the MongoDB connection URL
 const mongoURL = process.env.MONGO_URL;
 
@@ -72,10 +77,6 @@ if (mongoURL) {
     })
     .then(() => {
       console.log(`Connected to MongoDB Port: ${port}`);
-
-      // adds mock data
-      // User.insertMany(users);
-      // Post.insertMany(posts);
     })
     .catch((error) => {
       console.error('Error connecting to MongoDB:', error);
@@ -85,3 +86,8 @@ if (mongoURL) {
     'MONGO_URL is not defined. Make sure to set it in your .env file.'
   );
 }
+
+// Start the Express server
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});

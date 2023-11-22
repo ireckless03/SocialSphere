@@ -21,23 +21,17 @@ import {
   Close,
 } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
-import { setMode, setLogout } from 'state';
+import { setMode, setLogout } from '../../state';
 import { useNavigate } from 'react-router-dom';
-import FlexBetween from 'components/FlexBetween';
+import FlexBetween from '../../components/FlexBetween';
 
 const Navbar = () => {
-  // State to track mobile menu visibility
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
-
-  // Redux hooks for dispatching actions and accessing state
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-
-  // Media query hook to determine if the screen is non-mobile
   const isNonMobileScreens = useMediaQuery('(min-width: 1000px)');
 
-  // Theming variables for styling
   const theme = useTheme();
   const neutralLight = theme.palette.neutral.light;
   const dark = theme.palette.neutral.dark;
@@ -45,14 +39,11 @@ const Navbar = () => {
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
 
-  // Constructing the full name of the user
   const fullName = `${user.firstName} ${user.lastName}`;
 
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
-      {/* Left section of the Navbar */}
       <FlexBetween gap="1.75rem">
-        {/* SocialSphere logo with navigation link */}
         <Typography
           fontWeight="bold"
           fontSize="clamp(1rem, 2rem, 2.25rem)"
@@ -67,8 +58,6 @@ const Navbar = () => {
         >
           SocialSphere
         </Typography>
-
-        {/* Search bar for non-mobile screens */}
         {isNonMobileScreens && (
           <FlexBetween
             backgroundColor={neutralLight}
@@ -84,11 +73,9 @@ const Navbar = () => {
         )}
       </FlexBetween>
 
-      {/* Right section of the Navbar - Desktop or Mobile Menu Icon */}
+      {/* DESKTOP NAV */}
       {isNonMobileScreens ? (
-        // Desktop Navbar
         <FlexBetween gap="2rem">
-          {/* Dark/Light mode switch */}
           <IconButton onClick={() => dispatch(setMode())}>
             {theme.palette.mode === 'dark' ? (
               <DarkMode sx={{ fontSize: '25px' }} />
@@ -96,13 +83,9 @@ const Navbar = () => {
               <LightMode sx={{ color: dark, fontSize: '25px' }} />
             )}
           </IconButton>
-
-          {/* Message, Notifications, Help icons */}
           <Message sx={{ fontSize: '25px' }} />
           <Notifications sx={{ fontSize: '25px' }} />
           <Help sx={{ fontSize: '25px' }} />
-
-          {/* User profile dropdown */}
           <FormControl variant="standard" value={fullName}>
             <Select
               value={fullName}
@@ -129,7 +112,6 @@ const Navbar = () => {
           </FormControl>
         </FlexBetween>
       ) : (
-        // Mobile Navbar
         <IconButton
           onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
         >
@@ -137,7 +119,7 @@ const Navbar = () => {
         </IconButton>
       )}
 
-      {/* Mobile Navbar Menu */}
+      {/* MOBILE NAV */}
       {!isNonMobileScreens && isMobileMenuToggled && (
         <Box
           position="fixed"
@@ -149,7 +131,7 @@ const Navbar = () => {
           minWidth="300px"
           backgroundColor={background}
         >
-          {/* Close Icon */}
+          {/* CLOSE ICON */}
           <Box display="flex" justifyContent="flex-end" p="1rem">
             <IconButton
               onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
@@ -158,7 +140,7 @@ const Navbar = () => {
             </IconButton>
           </Box>
 
-          {/* Mobile Menu Items */}
+          {/* MENU ITEMS */}
           <FlexBetween
             display="flex"
             flexDirection="column"
@@ -166,7 +148,6 @@ const Navbar = () => {
             alignItems="center"
             gap="3rem"
           >
-            {/* Dark/Light mode switch */}
             <IconButton
               onClick={() => dispatch(setMode())}
               sx={{ fontSize: '25px' }}
@@ -177,13 +158,9 @@ const Navbar = () => {
                 <LightMode sx={{ color: dark, fontSize: '25px' }} />
               )}
             </IconButton>
-
-            {/* Message, Notifications, Help icons */}
             <Message sx={{ fontSize: '25px' }} />
             <Notifications sx={{ fontSize: '25px' }} />
             <Help sx={{ fontSize: '25px' }} />
-
-            {/* User profile dropdown */}
             <FormControl variant="standard" value={fullName}>
               <Select
                 value={fullName}
