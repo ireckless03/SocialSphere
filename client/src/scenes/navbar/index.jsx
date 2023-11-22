@@ -52,7 +52,7 @@ const Navbar = () => {
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
       {/* Left section of the Navbar */}
       <FlexBetween gap="1.75rem">
-        {/* Sociopedia logo with navigation link */}
+        {/* SocialSphere logo with navigation link */}
         <Typography
           fontWeight="bold"
           fontSize="clamp(1rem, 2rem, 2.25rem)"
@@ -65,7 +65,7 @@ const Navbar = () => {
             },
           }}
         >
-          Sociopedia
+          SocialSphere
         </Typography>
 
         {/* Search bar for non-mobile screens */}
