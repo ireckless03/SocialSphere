@@ -34,7 +34,7 @@ app.use(morgan('common'));
 app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors({
-  origin: "https://socialsphere-r7zm.onrender.com", 
+  origin: "http://localhost:3000", // Update with your React app's URL
   credentials: true,
 }));
 
